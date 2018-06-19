@@ -1,0 +1,346 @@
+<!--
+  Generated template for the DespesasPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+--> 
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{ pageTitle }}</ion-title>
+    <button ion-button color="primary" class="botaoNavbar" [disabled]="!form.valid" (click)="saveEntry()" small>Save</button>
+    <div *ngIf="isEdited && !hideForm">
+      <button ion-button item-right color="danger" class="botaoNavbar" (click)="deleteEntry()" small>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </div>
+  </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="!hideForm">
+    <form [formGroup]="form">
+        <ion-list *ngIf="isEdited">
+            <ion-grid>
+              <!-- DATA -->
+              <ion-row>
+                <ion-col col-2 text-left>
+                  <ion-item>
+                    <ion-icon align-left name="calendar" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-6 text-left>
+                  <ion-item class="tamnhoFonte">
+                    <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataDespesa" [(ngModel)]="dataFiltro">
+                    </ion-datetime>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-4 text-left>
+                  <ion-item class="tamnhoFonte">
+                    <ion-datetime displayFormat="HH:mm" placeholder="HH:mm" [(ngModel)]="timeFiltro" formControlName="tempoDespesa">
+                    </ion-datetime>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- PREÇOS-->
+              <ion-row>
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="cash" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-input type="number" placeholder="R$" formControlName="dpvrGasto" [(ngModel)]="dpVrGasto" ></ion-input>
+                  <hr>
+                </ion-col>
+              </ion-row>
+              <!-- Gasto | Ganho -->
+              <ion-row>
+                <ion-col col-6>
+                  <ion-item *ngIf="dpBtGasto == true" class="tamnhoFonte">
+                    <ion-label>Gasto</ion-label>
+                    <ion-checkbox formControlName="dpGasto" (click)="checkboxGasto()" [(ngModel)]="dpBtGasto" disabled ="true"></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                  <ion-item *ngIf="dpBtGanho == true" class="tamnhoFonte">
+                    <ion-label>Ganho</ion-label>
+                    <ion-checkbox formControlName="dpGanho" (click)="checkboxGanho()" [(ngModel)]="dpBtGanho" disabled ="true"></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- GRUPO DE GASTO-->
+              <ion-row *ngIf="dpBtGasto == true && dpVrGasto">
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="pricetags" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-select interface="popover" type="text" placeholder="Grupo de Gasto" formControlName="dpGpGasto" [(ngModel)]="grupogasto"
+                    col-12>
+                      <ion-option *ngFor="let grupogasto of grupogastos" value="{{ grupogasto.COD_GRUPOGASTO }}">{{ grupogasto.GRUPGAST_NOME }}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- GRUPO DE GANHO-->
+              <ion-row *ngIf="dpBtGanho == true  && dpVrGasto">
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="pricetags" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-select interface="popover" type="text" placeholder="Grupo de Ganho" formControlName="dpGpGanho" [(ngModel)]="grupoganho"
+                      col-12>
+                      <ion-option *ngFor="let grupoganho of grupoganhos" value="{{ grupoganho.COD_GRUPOGANHO }}">{{ grupoganho.GRUP_GAN_NOME }}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- FORMA PGTO -->
+              <ion-row *ngIf="(dpBtGasto == true || dpBtGanho == true)  && dpVrGasto">
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="paper" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-select interface="popover" type="text" placeholder="Forma de pagamento" formControlName="dpFormaPgto" [(ngModel)]="formapgto"
+                    [disabled]="isEdited"  col-12>
+                      <ion-option *ngFor="let formapgto of formapgtos" value="{{ formapgto.COD_FORMAPGTO }}">{{ formapgto.FORMPGTO_NOME }}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- LOCAL -->
+              <ion-row *ngIf="dpBtGasto == true  && dpVrGasto">
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="locate" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-select interface="popover" type="text" placeholder="Local" formControlName="dpLocal" [(ngModel)]="local" col-12>
+                      <ion-option *ngFor="let local of locais" value="{{ local.COD_LOCAL }}">{{ local.LOCAL_NOME }}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- DESCRIÇÃO -->
+              <ion-row *ngIf="(dpBtGasto == true || dpBtGanho == true)  && dpVrGasto">
+                <ion-col col-2>
+                  <ion-item>
+                    <ion-icon name="create" item-start small></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-input placeholder="Descrição" type="text" formControlName="dpDescricao" [(ngModel)]="dpDescricao"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- REPETE || PAGO || RECEBIDO -->
+              <ion-row *ngIf="dpBtGasto == true  && dpVrGasto">
+                <ion-col>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-label>Pago</ion-label>
+                    <ion-checkbox formControlName="dpBtPago" [(ngModel)]="dpBtPago"></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="dpBtGanho == true  && dpVrGasto">
+                <ion-col>
+                </ion-col>
+                <ion-col>
+                  <ion-item class="tamnhoFonte">
+                    <ion-label>Recebido</ion-label>
+                    <ion-checkbox formControlName="dpBtRecebido" [(ngModel)]="dpBtRecebido"></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              
+            </ion-grid> 
+          </ion-list>
+      <ion-list *ngIf="!isEdited">
+        <ion-grid>
+          <!-- DATA -->
+          <ion-row>
+            <ion-col col-2 text-left>
+              <ion-item>
+                <ion-icon align-left name="calendar" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataDespesa" [(ngModel)]="dataFiltro">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="HH:mm" placeholder="HH:mm" [(ngModel)]="timeFiltro" formControlName="tempoDespesa">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PREÇOS-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="cash" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col class="tamnhoFonte">
+              <ion-input type="number" placeholder="R$" formControlName="dpvrGasto" [(ngModel)]="dpVrGasto"></ion-input>
+              <hr>
+            </ion-col>
+          </ion-row>
+          <!-- Gasto | Ganho -->
+          <ion-row>
+            <ion-col col-6>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Gasto</ion-label>
+                <ion-checkbox formControlName="dpGasto" (click)="checkboxGasto()" [(ngModel)]="dpBtGasto"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Ganho</ion-label>
+                <ion-checkbox formControlName="dpGanho" (click)="checkboxGanho()" [(ngModel)]="dpBtGanho"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- GRUPO DE GASTO-->
+          <ion-row *ngIf="dpBtGasto == true && dpVrGasto">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="pricetags" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Grupo de Gasto" formControlName="dpGpGasto" [(ngModel)]="grupogasto"
+                  col-12>
+                  <ion-option *ngFor="let grupogasto of grupogastos" value="{{ grupogasto.COD_GRUPOGASTO }}">{{ grupogasto.GRUPGAST_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- GRUPO DE GANHO-->
+          <ion-row *ngIf="dpBtGanho == true  && dpVrGasto">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="pricetags" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Grupo de Ganho" formControlName="dpGpGanho" [(ngModel)]="grupoganho"
+                  col-12>
+                  <ion-option *ngFor="let grupoganho of grupoganhos" value="{{ grupoganho.COD_GRUPOGANHO }}">{{ grupoganho.GRUP_GAN_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- FORMA PGTO -->
+          <ion-row *ngIf="(dpBtGasto == true || dpBtGanho == true)  && dpVrGasto">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="paper" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Forma de pagamento" formControlName="dpFormaPgto" [(ngModel)]="formapgto"
+                  col-12>
+                  <ion-option *ngFor="let formapgto of formapgtos" value="{{ formapgto.COD_FORMAPGTO }}">{{ formapgto.FORMPGTO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- LOCAL -->
+          <ion-row *ngIf="dpBtGasto == true  && dpVrGasto">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="locate" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Local" formControlName="dpLocal" [(ngModel)]="local" col-12>
+                  <ion-option *ngFor="let local of locais" value="{{ local.COD_LOCAL }}">{{ local.LOCAL_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- DESCRIÇÃO -->
+          <ion-row *ngIf="(dpBtGasto == true || dpBtGanho == true)  && dpVrGasto">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="create" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input placeholder="Descrição" type="text" formControlName="dpDescricao" [(ngModel)]="dpDescricao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- REPETE || PAGO || RECEBIDO -->
+          <ion-row *ngIf="dpBtGasto == true  && dpVrGasto">
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Repete</ion-label>
+                <ion-checkbox formControlName="dpBtRepete" [(ngModel)]="dpBtRepete"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Pago</ion-label>
+                <ion-checkbox formControlName="dpBtPago" [(ngModel)]="dpBtPago"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="dpBtGanho == true  && dpVrGasto">
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Repete</ion-label>
+                <ion-checkbox formControlName="dpBtRepete" (click)="checkboxGasto()" [(ngModel)]="dpBtRepete"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Recebido</ion-label>
+                <ion-checkbox formControlName="dpBtRecebido" [(ngModel)]="dpBtRecebido"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PARCELAS-->
+          <ion-row *ngIf="(dpBtRepete == true && (grupoganho || grupogasto) && (dpBtGasto || dpBtGanho)) && dpVrGasto">
+            <ion-col>
+              <ion-item class="tamnhoFonte"> 
+                <ion-label floating>Quantas vezes?</ion-label>
+                <ion-input type="number" formControlName="dpQteParcela" [(ngModel)]="dpQteParcela"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <button ion-button class="fomatoBotao" (click)="abrirPopoverData()" small>Ver Parcela</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid> 
+      </ion-list>
+    </form>
+
+  </div>
+</ion-content>

@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Calculadora Flex</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form [formGroup]="form">
+
+    <ion-list>
+      <ion-grid class="decer">
+          <ion-row>
+              <ion-col>
+                Diferença de Autonomia
+              </ion-col>
+            </ion-row>
+        <ion-row>
+          <ion-col col-9>
+            <ion-range min="0" max="100" formControlName="calcFlexPorcentagem" [(ngModel)]="calcFlexPorcentagem" color="secondary">
+            </ion-range>
+          </ion-col>
+          <ion-col col-3>
+            <ion-item class="tamanhoPorcent">
+              {{calcFlexPorcentagem}}%
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Preço da Gasolina
+          </ion-col>
+          <ion-col>
+            Preço do Etanol
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" formControlName="calcFlexGasolina" [(ngModel)]="calcFlexGasolina" (ionChange)="checar()"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" formControlName="calcFlexAlcool" [(ngModel)]="calcFlexAlcool" (ionChange)="checar()"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+        <div padding>
+        <button ion-button color="primary" text-center block [disabled]="!form.valid" (click)="calcularGasAlc()">Calcular</button>
+      </div>
+
+      <div text-center class="bckResultado" *ngIf="resultado && calcFlexGasolina && calcFlexAlcool">
+        {{resultado}}
+      </div>
+      <div  *ngIf="resultado && calcFlexGasolina && calcFlexAlcool" padding>
+        <button ion-button color="primary" text-center block (click)="viewEntryAbast()">Cadastrar abastecimento</button>
+      </div>
+    </ion-list>
+  </form>
+
+
+</ion-content>

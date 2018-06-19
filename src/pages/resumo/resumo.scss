@@ -1,0 +1,62 @@
+page-resumo {
+    .expand-wrapper {
+        transition: 0.2s linear;
+      }   
+  
+    .collapsed {
+        height: 0 !important;
+    }
+    .swiper-slide {
+        overflow-y: auto;
+        -webkit-overflow-scrolling : touch ;
+        display: block;
+    }
+    .no-scroll .scroll-content { 
+        overflow: hidden; 
+    }
+    .ajusteAlturaGrid{
+        margin-top: -10%;
+    }
+    .ajusteAlturaEntreGrid{
+        margin-top: -3%;
+    }
+    .ajusteAlturalinhaGrid{
+        margin-top: -2%;
+        margin-bottom: 8%;
+    }
+    
+    .corGastei{
+        color: red;
+    }
+    .corGanhei{
+        color: green;
+    }
+    .corSobrou{
+        color: blue;
+    }
+     //trocar cor do botão e fundo e escrever nome
+     .fab {
+        contain: initial;
+        //box-shadow: 0px 1px 1px 1px black;
+      }
+      //trocar cor do botão e fundo e escrever nome
+      ion-fab {
+          ion-fab-list button[ion-fab] {
+              overflow: visible;
+              div.label {
+                position: absolute;
+                right: 48px;
+                background: rgb(0, 0, 0);
+                height: 24px;
+                line-height: 16px;
+                padding-left: 8px;
+                padding-right: 8px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                border-radius: 3px;
+                color: #fff;
+                //box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1);
+              }
+          }
+        }
+}

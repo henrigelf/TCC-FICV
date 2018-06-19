@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Manutenções</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card *ngFor="let manutencao of servicoManutencoes">
+        <ion-grid>
+          <ion-row class="mover">
+            <ion-col>
+              <strong>{{ manutencao.TIP_SERVC_NOME }}</strong>
+            </ion-col>
+            <ion-col text-right>
+                <strong>{{ manutencao.SERVICO_ODOMETRO }} km</strong>
+              </ion-col>
+          </ion-row>
+          <ion-row class="tamanho">
+            <ion-col>
+              {{ manutencao.SERVICO_DATA }}
+            </ion-col>
+            <ion-col text-right>
+              R${{ manutencao.SERVICO_VRTOT }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    
+      <!--BOTÃO SUSPENSO -->
+      <ion-fab bottom right>
+        <button ion-fab mini (click)="goManutencao()">
+          <ion-icon name="construct"></ion-icon>
+        </button>
+      </ion-fab>
+</ion-content>

@@ -1,0 +1,24 @@
+page-welcome {
+    #welcome{
+        //background: color($colors, secondary);
+        background-image: url(../assets/imgs/BckWelcome.png);
+        background-size: cover;
+        background-position: center;
+        h1{
+            font-size: 32px;
+            margin-top: 50px;
+        }
+        .marginTop{
+            margin-top: 20%;
+        }
+        .marginBot{
+            margin-bottom: 40%;
+        }    
+    }
+    .imagem{
+        background-image: url(../assets/imgs/logoficv.png);
+    }
+    .no-scroll .scroll-content { 
+        overflow: hidden; 
+    }
+}

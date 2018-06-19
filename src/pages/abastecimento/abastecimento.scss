@@ -1,0 +1,31 @@
+page-abastecimento {
+    .no-scroll .scroll-content { 
+        overflow: hidden; 
+    }    
+    .fomatoBotao{
+        height: 50px;
+        width: 70px;
+        border-radius: 10px;
+        float: right;
+        font-size: 10px; 
+        margin-top: 20px;
+    }
+   .posicaoVrComb{
+     margin-top: 5px;
+     margin-left: 19px;
+     display: block;
+     font-size: small;
+   }
+    /*.altObs{
+        height: 100px;
+        margin-top: 20px;
+        display: block;
+    }*/
+
+    .botaoNavbar{
+        float: right;     
+    }
+    .tamnhoFonte{
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Abastecimentos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let itemAbastecimento of itemsAbastecimento">
+    <ion-grid>
+      <ion-row class="mover">
+        <ion-col>
+          <strong>{{ itemAbastecimento.LOCAL_NOME }} - {{itemAbastecimento.MODELVEICULO_NOME}}</strong>
+        </ion-col>
+        <ion-col text-right>
+          <strong>{{ itemAbastecimento.ABAST_ODOMETRO }} km</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row class="tamanho">
+        <ion-col>
+          {{ itemAbastecimento.TIPCOMB_NOME }}
+        </ion-col>
+        <ion-col text-right>
+          R${{ itemAbastecimento.ABAST_VRTOT }}
+        </ion-col>
+      </ion-row>
+      <ion-row class="tamanho">
+          <ion-col>
+              R${{ itemAbastecimento.ITEMABAST_PRECO }}
+          </ion-col>
+          <ion-col text-right>
+           {{ itemAbastecimento.ITEMABAST_LITRO }}L
+          </ion-col>
+        </ion-row>
+      <ion-row>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col text-right class="dataTexto">
+            {{ itemAbastecimento.ABAST_DATA }} 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!--BOTÃO SUSPENSO -->
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="goAbastecimento()">
+      <ion-icon name="water"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

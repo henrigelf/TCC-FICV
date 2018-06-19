@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Receitas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card *ngFor="let receita of servicoReceitas">
+        <ion-grid>
+          <ion-row class="mover">
+            <ion-col>
+              <strong>{{ receita.GRUP_GAN_NOME }}</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row class="tamanho">
+              <ion-col text-left>
+                 {{ receita.GANHO_OBS }}
+                </ion-col>
+            </ion-row>
+          <ion-row class="tamanho">
+            <ion-col>
+              {{ receita.GANHO_DATA }}
+            </ion-col>
+            <ion-col text-right>
+              R${{ receita.GANHO_VALOR }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    
+      <!--BOTÃO SUSPENSO -->
+      <ion-fab bottom right>
+        <button ion-fab mini (click)="goReceita()">
+          <ion-icon name="card"></ion-icon>
+        </button>
+      </ion-fab>
+</ion-content>

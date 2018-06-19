@@ -1,0 +1,1472 @@
+<!--
+  Generated template for the ResumoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Resumo</ion-title>
+
+  </ion-navbar>
+  <!--<ion-item-divider>
+    <ion-label color="primary" floating>Ano a ser filtrado</ion-label>
+    <ion-datetime displayFormat="YYYY" [(ngModel)]="ano"></ion-datetime>
+
+    <div item-end *ngIf="gastoAbaste">
+      <ion-label color="primary" floating>Veículo</ion-label>
+      <ion-select type="text" [(ngModel)]="veiculo" (ionChange)="retornaResumo()">
+        <ion-option *ngFor="let veiculo of veiculos" value="{{ veiculo.COD_VEICULO }}">{{ veiculo.MODELVEICULO_NOME }}</ion-option>
+      </ion-select>
+    </div>
+  </ion-item-divider>-->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" floating>Ano a ser filtrado</ion-label>
+          <ion-datetime displayFormat="YYYY" [(ngModel)]="ano" (ionChange)="retornaResumo()"></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col *ngIf="gastoAbaste">
+        <ion-item>
+          <ion-label color="primary" floating>Veículo</ion-label>
+          <ion-select interface="popover" type="text" [(ngModel)]="veiculo" (ionChange)="retornaResumo()">
+            <ion-option *ngFor="let veiculo of veiculos" value="{{ veiculo.COD_VEICULO }}">{{ veiculo.MODELVEICULO_NOME }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-segment [(ngModel)]="page" toolbar-ios-title-text-color>
+    <ion-segment-button value="0" (click)="selectedTab(0)">
+      Gasto geral
+    </ion-segment-button>
+    <ion-segment-button value="1" (click)="selectedTab(1)">
+      Gasto Abastecimento
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-header>
+
+
+<ion-content class="no-scroll">
+  <ion-slides #slider (ionSlideWillChange)="movieButton($event)" padding>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <strong>Janeiro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiJaneiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiJaneiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouJaneiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Fevereiro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiFevereiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiFevereiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouFevereiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Março</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiMarco}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiMarco}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouMarco}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Abril</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiAbril}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiAbril}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouAbril}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Maio</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiMaio}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiMaio}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouMaio}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Junho</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiJunho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiJunho}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouJunho}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Julho</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiJulho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiJulho}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouJulho}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Agosto</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiAgosto}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiAgosto}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouAgosto}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Setembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiSetembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiSetembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouSetembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Outubro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiOutubro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiOutubro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouOutubro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Novembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiNovembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiNovembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouNovembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Dezembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiDezembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Ganhei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGanhei">
+                  R$ {{resGanheiDezembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Sobrou</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  R$ {{resSobrouDezembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <strong>Janeiro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustJaneiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmJaneiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroJaneiro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralJaneiro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Fevereiro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustFevereiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmFevereiro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroFevereiro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralFevereiro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Março</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustMarco}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmMarco}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroMarco}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralMarco}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Abril</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustAbril}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmAbril}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroAbril}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralAbril}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Maio</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustMaio}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmMaio}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroMaio}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralMaio}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Junho</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustJunho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmJunho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroJunho}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralJunho}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Julho</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustJulho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmJulho}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroJulho}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralJulho}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Agosto</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustAgosto}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmAgosto}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroAgosto}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralAgosto}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Setembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustSetembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmSetembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroSetembro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralSetembro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Outubro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustOutubro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmOutubro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroOutubro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralOutubro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Novembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustNovembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmNovembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroNovembro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralNovembro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <strong>Dezembro</strong>
+          <hr>
+        </ion-card-header>
+        <ion-card-content class="ajusteAlturaGrid">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Gastei</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  R$ {{resGasteiCombustDezembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>KM Total</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corGastei">
+                  {{resTotKmDezembro}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row class="ajusteAlturaEntreGrid">
+              <ion-col>
+                <div text-left>
+                  <strong>Litros Gastos</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right>
+                  {{resTotLitroDezembro}} L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <hr class="ajusteAlturalinhaGrid">
+
+          <ion-grid class="ajusteAlturaGrid">
+            <ion-row>
+              <ion-col>
+                <div text-left>
+                  <strong>Média Geral</strong>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div text-right class="corSobrou">
+                  {{resMedGeralDezembro}} Km/L
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <ion-fab bottom right>
+    <button ion-fab mini>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="goAbastecimento()">
+        <ion-icon name="water"></ion-icon>
+        <div class="label">Abastecimento</div>
+      </button>
+      <button ion-fab (click)="goDespesas()">
+        <ion-icon name="card"></ion-icon>
+        <div class="label">Despesas</div>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

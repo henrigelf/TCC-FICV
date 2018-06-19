@@ -1,0 +1,201 @@
+<!--
+  Generated template for the VeiculoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{pageTitle}}</ion-title>
+    <button ion-button color="primary" class="botaoNavbar" [disabled]="!form.valid" (click)="saveEntry()" small>Save</button>
+    <div *ngIf="isEdited && !hideForm">
+      <button ion-button item-right color="danger" class="botaoNavbar" (click)="deleteEntry()" small>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </div>
+  </ion-navbar> 
+
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="!hideForm">
+    <!-- Lembrar de voltar para o form (ngSubmit)="saveEntry()"-->
+    <form [formGroup]="form">
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="car" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-10>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" placeholder="* Veículo" formControlName="tipoVeiculo" [(ngModel)]="tipoVeiculo" col-12>
+                  <ion-option value="1">Carro</ion-option>
+                  <ion-option value="2">Moto</ion-option>
+                  <ion-option value="3">Ônibus</ion-option>
+                  <ion-option value="4">Caminhão</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="tipoVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="help-circle" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="* Marca" formControlName="marcaVeiculo" [(ngModel)]="marcaVeiculo"
+                  col-12 (ionChange)="loadModelo()">
+                  <ion-option *ngFor="let marca of marcaVeiculos" value="{{ marca.COD_MARCA }}">{{ marca.MARCA_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="list" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="* Modelo" formControlName="modeloVeiculo" [(ngModel)]="modeloVeiculo"
+                  col-12>
+                  <ion-option *ngFor="let modelo of modeloVeiculos" value="{{ modelo.COD_MODELO }}">{{ modelo.MODELVEICULO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+              <ion-col col-2>
+                <ion-item class="tamnhoFonte">
+                  <ion-icon name="repeat" item-start  small></ion-icon>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item class="tamnhoFonte">
+                  <ion-input type="number" placeholder="* Odometro total" formControlName="totOdometroVeiculo" [(ngModel)]="totOdometroVeiculo"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="barcode" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input type="text" placeholder="Placa" formControlName="placaVeiculo" [(ngModel)]="placaVeiculo"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input type="number" placeholder="Ano" formControlName="anoVeiculo" [(ngModel)]="anoVeiculo"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Dois tanques de combustíveis</ion-label>
+                <ion-toggle formControlName="qteTanqueVeiculo" [(ngModel)]="qteTanqueVeiculo"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="color-fill" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-5>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Tipo combustivel" formControlName="tipoAbastecimentoVeiculo" [(ngModel)]="tipoAbastecimentoVeiculo"
+                  col-12>
+                  <ion-option *ngFor="let tipoAbastecimento of tipoAbastecimentoVeiculos" value="{{ tipoAbastecimento.COD_TIPOABASTECIMENTO }}">
+                    {{ tipoAbastecimento.TIPABAST_NOME }}
+                  </ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input type="number" placeholder="Vol. do Tanque" formControlName="volumeTanqueVeiculo" [(ngModel)]="volumeTanqueVeiculo"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="speedometer" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Marca" formControlName="unidadeMedidaVeiculo" [(ngModel)]="unidadeMedidaVeiculo"
+                  col-12>
+                  <ion-option *ngFor="let unidadeMedidaVeic of unidadeMedidaVeiculos" value="{{ unidadeMedidaVeic.COD_UNIDMEDVEIC }}">{{ unidadeMedidaVeic.UNIDMEDVEIC_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="clipboard" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col> 
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input type="text" placeholder="Chassi" formControlName="chassiVeiculo" [(ngModel)]="chassiVeiculo"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item class="tamnhoFonte">
+                <ion-icon name="clipboard" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input type="number" placeholder="Renavam" formControlName="renavamVeiculo" [(ngModel)]="renavamVeiculo"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- OBSERVAÇÃO-->
+          <ion-row *ngIf="marcaVeiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="create" item-start  small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-textarea placeholder="Observação" rows="2" type="text" class="altObs" formControlName="obsVeiculo" [(ngModel)]="obsVeiculo"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="marcaVeiculo">
+
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label>Ativo</ion-label>
+                <ion-toggle formControlName="statusVeiculo" [(ngModel)]="statusVeiculo"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

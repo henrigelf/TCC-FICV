@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Veiculo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let veiculo of Veiculos">
+    <div (click)="viewEntryLocal({ paramVeiculo: veiculo })">
+      <ion-grid>
+        <ion-row class="mover">
+          <ion-col>
+            <strong>{{veiculo.MODELVEICULO_NOME}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row class="tamanho">
+          <ion-col>
+            Total Odometro
+          </ion-col>
+          <ion-col text-right>
+            {{ veiculo.VEIC_ODOMETROTOT }}
+            <strong>km</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row class="tamanho">
+          <ion-col>
+            Volume Tanque
+          </ion-col>
+          <ion-col text-right>
+            {{ veiculo.VEIC_VOLUMETANQUE }}
+            <strong>L</strong>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
+
+  <!--BOTÃO SUSPENSO -->
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="goVeiculo()">
+      <ion-icon name="car"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

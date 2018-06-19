@@ -1,0 +1,267 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Home</ion-title>
+    <button ion-button color="primary" class="botaoNavbar" (click)="logout()" small>Logout</button>
+  </ion-navbar>
+
+  <ion-segment [(ngModel)]="page" toolbar-ios-title-text-color>
+    <ion-segment-button value="0" (click)="selectedTab(0)">
+      tudo
+    </ion-segment-button>
+    <ion-segment-button value="1" (click)="selectedTab(1)">
+      entrada
+    </ion-segment-button>
+    <ion-segment-button value="2" (click)="selectedTab(2)">
+      saída
+    </ion-segment-button>
+    <ion-segment-button value="3" (click)="selectedTab(3)">
+      futuro
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-header>
+
+<ion-content class="no-scroll">
+  <ion-slides #slider (ionSlideWillChange)="movieButton($event)" padding>
+    <!-- TUDO -->
+    <ion-slide>
+      <div class="container">
+        <ul>
+          <li *ngFor="let item of items">
+            <span>
+              <ion-icon name="construct" *ngIf="item.tipo == 'SERVICO'"></ion-icon>
+              <ion-icon name="cash" *ngIf="item.tipo == 'GANHO'"></ion-icon>
+              <ion-icon name="md-card" *ngIf="item.tipo == 'DESPESA'"></ion-icon>
+              <ion-icon name="water" *ngIf="item.tipo == 'ABASTECIMENTO'"></ion-icon>
+            </span>
+            <!--<div (click)="viewEntry({ record: item })">-->
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div class="dataEntrada">
+                      <div class="dataTexto">
+                        <strong>{{ item.data | date: 'dd/MM/yyyy' }}</strong>
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="inicioEntrada">
+                  <ion-col text-left>
+                    <strong>{{ item.nomeGrupo }}</strong>
+                  </ion-col>
+                  <ion-col text-right>
+                    <strong>R$ {{ item.valor }}</strong>
+                  </ion-col>
+                </ion-row>
+                <!--<ion-row>
+                  <ion-col text-left *ngIf="item.tipo == 'GANHO'">
+                    Serviços
+                  </ion-col>
+                  <ion-col text-left *ngIf="item.tipo == 'ABASTECIMENTO'">
+                    Veículo
+                  </ion-col>
+                </ion-row>-->
+                <ion-row>
+                  <ion-col text-left *ngIf="item.tipo != 'GANHO'" class="meioEntrada">
+                    <ion-icon name="pin"></ion-icon>
+                    {{ item.local }}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="meioEntrada">
+                      <ion-icon name="create" ></ion-icon>
+                    {{ item.observacao }}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left *ngIf="item.tipo == 'SERVICO' || item.tipo == 'ABASTECIMENTO'" class="meioEntrada">
+                    <ion-icon name="speedometer"></ion-icon>
+                    {{ item.odometro }} km
+                  </ion-col>
+                  <ion-col text-left *ngIf="item.tipo == 'ABASTECIMENTO'" class="meioEntrada">
+                      <ion-icon name="md-podium"></ion-icon>
+                      {{ item.media }} km/L
+                    </ion-col>
+                </ion-row>
+              </ion-grid>
+            <!--</div>-->
+          </li>
+        </ul>
+      </div>
+    </ion-slide>
+    <!-- ENTRADA -->
+    <ion-slide>
+      <div class="container">
+        <ul>
+          <li *ngFor="let receita of homeReceitas">
+            <span>
+              <ion-icon name="cash"></ion-icon>
+            </span>
+            <div (click)="viewEntryganho({ paramganho: receita })">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div class="dataEntrada">
+                      <div class="dataTexto">
+                        <strong>{{ receita.GANHO_DATA }}</strong>
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="inicioEntrada">
+                  <ion-col text-left>
+                    <strong>{{ receita.GRUP_GAN_NOME }}</strong>
+                  </ion-col>
+                  <ion-col text-right>
+                    <strong>R$ {{ receita.GANHO_VALOR }}</strong>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="meioEntrada">
+                    {{ receita.GANHO_OBS }}
+                  </ion-col>
+                  <ion-col text-right class="meioEntrada">
+                    ({{ receita.GANHO_NUMPARCELA }}/{{ receita.GANHO_QTETOTPARCELA }})
+                    <div *ngIf="receita.GANHO_STATUS ==1" class="pagoCor">recebida</div>
+                    <div *ngIf="receita.GANHO_STATUS ==0" class="nPagoCor">Não recebida</div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </ion-slide>
+    <!-- SAÍDA -->
+    <ion-slide>
+      <div class="container">
+        <ul>
+          <li *ngFor="let despesa of homeDespesas">
+            <span>
+                <ion-icon name="construct" *ngIf="despesa.tipo == 'SERVICO'"></ion-icon>
+                <ion-icon name="md-card" *ngIf="despesa.tipo == 'DESPESA'"></ion-icon>
+                <ion-icon name="water" *ngIf="despesa.tipo == 'ABASTECIMENTO'"></ion-icon>
+            </span>
+            <div (click)="viewEntrydesp({ paramdesp: despesa })">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div class="dataEntrada">
+                      <div class="dataTexto">
+                        <strong>{{ despesa.data | date: 'dd/MM/yyyy'}}</strong>
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="inicioEntrada">
+                  <ion-col text-left>
+                    <strong>{{ despesa.nomeGrupo }}</strong>
+                  </ion-col>
+                  <ion-col text-right>
+                    <strong>R$ {{ despesa.valor }}</strong>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="meioEntrada">
+                      <ion-icon name="create" ></ion-icon>
+                    {{ despesa.observacao }}
+                  </ion-col>
+                  <ion-col text-right class="meioEntrada">
+                    ({{ despesa.numParcela }}/{{ despesa.qteTotParcela }})
+                    <div *ngIf="despesa.status == 1" class="pagoCor">Pago</div>
+                    <div *ngIf="despesa.status == 0" class="nPagoCor">Não Pago</div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+
+                  <ion-col text-left class="meioEntrada">
+                    <ion-icon name="pin"></ion-icon>
+                    {{ despesa.local }}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </ion-slide>
+    <!-- FUTURO -->
+    <ion-slide>
+        <div class="container">
+            <ul>
+              <li *ngFor="let lancFuturo of homeFuturos">
+                <span>
+                    <ion-icon name="construct" *ngIf="lancFuturo.tipo == 'SERVICO'"></ion-icon>
+                    <ion-icon name="md-card" *ngIf="lancFuturo.tipo == 'DESPESA'"></ion-icon>
+                    <ion-icon name="water" *ngIf="lancFuturo.tipo == 'ABASTECIMENTO'"></ion-icon>
+                </span>
+                <div (click)="viewEntrydesp({ paramdesp: lancFuturo })">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <div class="dataEntrada">
+                          <div class="dataTexto">
+                            <strong>{{ lancFuturo.data | date: 'dd/MM/yyyy'}}</strong>
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="inicioEntrada">
+                      <ion-col text-left>
+                        <strong>{{ lancFuturo.nomeGrupo }}</strong>
+                      </ion-col>
+                      <ion-col text-right>
+                        <strong>R$ {{ lancFuturo.valor }}</strong>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col text-left class="meioEntrada">
+                          <ion-icon name="create" ></ion-icon>
+                        {{ lancFuturo.observacao }}
+                      </ion-col>
+                      <ion-col text-right class="meioEntrada">
+                        ({{ lancFuturo.numParcela }}/{{ lancFuturo.qteTotParcela }})
+                        <div *ngIf="lancFuturo.status == 1" class="pagoCor">Pago</div>
+                        <div *ngIf="lancFuturo.status == 0" class="nPagoCor">Não Pago</div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+    
+                      <ion-col text-left class="meioEntrada">
+                        <ion-icon name="pin"></ion-icon>
+                        {{ lancFuturo.local }}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </li>
+            </ul>
+          </div>
+    </ion-slide>
+  </ion-slides>
+  <!--BOTÃO SUSPENSO -->
+  <ion-fab bottom right>
+    <button ion-fab mini>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="goAbastecimento()">
+        <ion-icon name="water"></ion-icon>
+        <div class="label">Abastecimento</div>
+      </button>
+      <button ion-fab (click)="goDespesas()">
+        <ion-icon name="card"></ion-icon>
+        <div class="label">Despesas</div>
+      </button>
+      <button ion-fab (click)="goManutencaoVeicular()">
+        <ion-icon name="construct"></ion-icon>
+        <div class="label">Serviços</div>
+      </button>
+      <button ion-fab (click)="goServicoVeiculo()">
+        <ion-icon name="car"></ion-icon>
+        <div class="label">Cadastrar Veículos</div>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

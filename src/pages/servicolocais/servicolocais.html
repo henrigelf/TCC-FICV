@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Locais</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let local of servicoLocais">
+    <div (click)="viewEntryLocal({ paramlocal: local })">
+    <ion-grid>
+      <ion-row class="mover">
+        <ion-col>
+          <div *ngIf=" local.LOCAL_TIPO == 1">
+            <strong> Local</strong>
+          </div>
+          <div *ngIf=" local.LOCAL_TIPO == 2">
+            <strong> Posto</strong>
+          </div>
+          <strong>{{ local.LOCAL_NOME }}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row class="tamanho">
+        <ion-col>
+          {{ local.LOCAL_ENDERECO }}
+          <a *ngIf="local.LOCAL_NUMERO">,</a> {{ local.LOCAL_NUMERO }}
+          <a *ngIf="local.LOCAL_BAIRRO">-</a> {{ local.LOCAL_BAIRRO }}
+          <a *ngIf="local.LOCAL_CIDADE">,</a> {{ local.LOCAL_CIDADE }}
+          <a *ngIf="local.LOCAL_UF">-</a> {{ local.LOCAL_UF }}
+          <a *ngIf="local.LOCAL_CEP">,</a> {{ local.LOCAL_CEP }}
+          <a *ngIf="local.LOCAL_PAIS">,</a> {{ local.LOCAL_PAIS }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  </ion-card>
+
+  <!--BOTÃO SUSPENSO -->
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="goLocal()">
+      <ion-icon name="compass"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

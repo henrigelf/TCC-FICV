@@ -1,0 +1,411 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+
+    <ion-title>{{ pageTitle }}</ion-title>
+    <button ion-button color="primary" class="botaoNavbar" [disabled]="!form.valid" (click)="saveEntry()" small>Save</button>
+    <div *ngIf="isEdited && !hideForm">
+      <button ion-button item-right color="danger" class="botaoNavbar" (click)="deleteEntry()" small>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </div>
+
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div *ngIf="!hideForm">
+    <form [formGroup]="form">
+      <ion-list *ngIf="isEdited">
+        <ion-grid>
+          <!-- DATA -->
+          <ion-row>
+            <ion-col col-2 text-left>
+              <ion-item>
+                <ion-icon align-left name="calendar" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataabastecimento" [(ngModel)]="dataFiltro">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="HH:mm" placeholder="HH:mm" [(ngModel)]="timeFiltro" formControlName="tempoAbastecimento">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- Veiculo -->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="car" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Veículo" formControlName="abVeiculo" [(ngModel)]="veiculo" col-12>
+                  <ion-option *ngFor="let veiculo of veiculos" value="{{ veiculo.COD_VEICULO }}">{{ veiculo.MODELVEICULO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- ODÔMETRO-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="speedometer" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input placeholder="Odômetro" type="number" formControlName="abOdometro" [(ngModel)]="odometro" max="2"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- COMBUSTIVEL -->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="water" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" placeholder="Combustivel" formControlName="abCombustivel" [(ngModel)]="tipoCombustivel" col-12>
+                  <ion-option *ngFor="let tipoCombustivel of tipoCombustivels" value="{{ tipoCombustivel.COD_TIPOCOMBUSTIVEL }}">{{ tipoCombustivel.TIPCOMB_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PREÇOS-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="cash" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Preço(L)" class="posicaoVrComb" formControlName="abPrecoL" [(ngModel)]="abPrecoL" (ionBlur)="CalcPrecoL()"></ion-input>
+              <hr>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Valor Total" class="posicaoVrComb" formControlName="abVrTotal" [(ngModel)]="abVrtotal"
+                (ionBlur)="CalcVrTotal()"></ion-input>
+              <hr>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Litros" class="posicaoVrComb" formControlName="abLitros" [(ngModel)]="abLitros" (ionBlur)="CalcLitros()"></ion-input>
+              <hr>
+            </ion-col>
+          </ion-row>
+          <!-- GRUPO DE GASTO-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="pricetags" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Grupo de Gasto" formControlName="abGpGasto" [(ngModel)]="grupogasto"
+                  col-12>
+                  <ion-option *ngFor="let grupogasto of grupogastos" value="{{ grupogasto.COD_GRUPOGASTO }}">{{ grupogasto.GRUPGAST_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- FORMA PGTO -->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="paper" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Forma de pagamento" formControlName="abFormaPgto" [(ngModel)]="formapgto"
+                  [disabled]="isEdited" col-12>
+                  <ion-option *ngFor="let formapgto of formapgtos" value="{{ formapgto.COD_FORMAPGTO }}">{{ formapgto.FORMPGTO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PARCELAS-->
+          <ion-row *ngIf="formapgto == 3 && grupogasto">
+            <ion-col col-2>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label floating>Quantas vezes?</ion-label>
+                <ion-input type="number" formControlName="abQteParcela" [(ngModel)]="abQteParcela" [disabled]="isEdited"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <button ion-button class="fomatoBotao" (click)="abrirPopoverData()">Ver Parcela</button>
+            </ion-col>
+          </ion-row>
+          <!-- TAQUE COMPLETO?-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="color-fill" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-7>
+              <ion-item class="tamnhoFonte">
+                Está completo o tanque?
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-toggle formControlName="abCompletTanque" [(ngModel)]="abCompletTanque"></ion-toggle>
+            </ion-col>
+          </ion-row>
+          <!-- LOCAL -->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="locate" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Local" formControlName="abLocal" [(ngModel)]="local" col-12>
+                  <ion-option *ngFor="let local of locais" value="{{ local.COD_LOCAL }}">{{ local.LOCAL_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- OBSERVAÇÃO-->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="create" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-textarea placeholder="Observação" rows="3" type="text" class="altObs" formControlName="abObs" [(ngModel)]="obs"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- REPETE || PAGO -->
+          <ion-row>
+            <ion-col col-6>
+            </ion-col>
+            <ion-col col-6>
+              <ion-item>
+                <ion-label>Pago</ion-label>
+                <ion-checkbox formControlName="abBtPago" [(ngModel)]="abBtPago"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <!-- TELA NORMAL-->
+      <ion-list *ngIf="!isEdited">
+        <ion-grid>
+          <!-- DATA -->
+          <ion-row>
+            <ion-col col-2 text-left>
+              <ion-item>
+                <ion-icon align-left name="calendar" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-6 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataabastecimento" [(ngModel)]="dataFiltro">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4 text-left>
+              <ion-item class="tamnhoFonte">
+                <ion-datetime displayFormat="HH:mm" placeholder="HH:mm" [(ngModel)]="timeFiltro" formControlName="tempoAbastecimento">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- Veiculo -->
+          <ion-row>
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="car" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Veículo" formControlName="abVeiculo" [(ngModel)]="veiculo" col-12
+                  (ionChange)="loadKm()">
+                  <ion-option *ngFor="let veiculo of veiculos" value="{{ veiculo.COD_VEICULO }}">{{ veiculo.MODELVEICULO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- ODÔMETRO-->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="speedometer" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-input placeholder="Odômetro" type="number" formControlName="abOdometro" [(ngModel)]="odometro" max="2"></ion-input>
+              </ion-item>
+              <div *ngIf="veiculo" class="tamnhoFonte">
+                <div *ngFor="let km of kmVeiculo">
+                  Último odômetro: {{km.ABAST_ODOMETRO}} km
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!-- COMBUSTIVEL -->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="water" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" placeholder="Combustivel" formControlName="abCombustivel" [(ngModel)]="tipoCombustivel" col-12>
+                  <ion-option *ngFor="let tipoCombustivel of tipoCombustivels" value="{{ tipoCombustivel.COD_TIPOCOMBUSTIVEL }}">{{ tipoCombustivel.TIPCOMB_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PREÇOS-->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="cash" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Preço(L)" class="posicaoVrComb" formControlName="abPrecoL" [(ngModel)]="abPrecoL" (ionBlur)="CalcPrecoL()"></ion-input>
+              <hr>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Valor Total" class="posicaoVrComb" formControlName="abVrTotal" [(ngModel)]="abVrtotal"
+                (ionBlur)="CalcVrTotal()"></ion-input>
+              <hr>
+            </ion-col>
+            <ion-col>
+              <ion-input type="number" placeholder="Litros" class="posicaoVrComb" formControlName="abLitros" [(ngModel)]="abLitros" (ionBlur)="CalcLitros()"></ion-input>
+              <hr>
+            </ion-col>
+          </ion-row>
+          <!-- GRUPO DE GASTO-->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="pricetags" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Grupo de Gasto" formControlName="abGpGasto" [(ngModel)]="grupogasto"
+                  col-12>
+                  <ion-option *ngFor="let grupogasto of grupogastos" value="{{ grupogasto.COD_GRUPOGASTO }}">{{ grupogasto.GRUPGAST_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- FORMA PGTO -->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="paper" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Forma de pagamento" formControlName="abFormaPgto" [(ngModel)]="formapgto"
+                  col-12>
+                  <ion-option *ngFor="let formapgto of formapgtos" value="{{ formapgto.COD_FORMAPGTO }}">{{ formapgto.FORMPGTO_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- PARCELAS-->
+          <ion-row *ngIf="formapgto == 3 && grupogasto">
+            <ion-col col-2>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-label floating>Quantas vezes?</ion-label>
+                <ion-input type="number" formControlName="abQteParcela" [(ngModel)]="abQteParcela"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <button ion-button class="fomatoBotao" (click)="abrirPopoverData()">Ver Parcela</button>
+            </ion-col>
+          </ion-row>
+          <!-- TAQUE COMPLETO?-->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="color-fill" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col col-7>
+              <ion-item class="tamnhoFonte">
+                Está completo o tanque?
+              </ion-item>
+            </ion-col>
+            <ion-col>     
+                <ion-toggle formControlName="abCompletTanque" [(ngModel)]="abCompletTanque"></ion-toggle>
+            </ion-col>
+          </ion-row>
+          <!-- LOCAL -->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="locate" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-select interface="popover" type="text" placeholder="Local" formControlName="abLocal" [(ngModel)]="local" col-12>
+                  <ion-option *ngFor="let local of locais" value="{{ local.COD_LOCAL }}">{{ local.LOCAL_NOME }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- OBSERVAÇÃO-->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-2>
+              <ion-item>
+                <ion-icon name="create" item-start small></ion-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="tamnhoFonte">
+                <ion-textarea placeholder="Observação" rows="3" type="text" class="altObs" formControlName="abObs" [(ngModel)]="obs"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- REPETE || PAGO -->
+          <ion-row *ngIf="veiculo">
+            <ion-col col-6>
+            </ion-col>
+            <ion-col col-6>
+              <ion-item>
+                <ion-label>Pago</ion-label>
+                <ion-checkbox formControlName="abBtPago" [(ngModel)]="abBtPago"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </form>
+
+  </div>
+</ion-content>

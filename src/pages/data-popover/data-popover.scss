@@ -1,0 +1,21 @@
+page-data-popover {
+    .no-scroll .scroll-content { 
+        overflow: hidden; 
+        font-size: 11px;
+        width: 100%;
+    }
+    .teste{
+        width:150%;
+        
+    }
+    .corPago{
+        color: green;
+    }
+    .corNPago{
+        color: red;
+    }
+
+    .posicaoPgto{
+        font-size: 9px;
+    }
+}

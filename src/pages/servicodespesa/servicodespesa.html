@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Despesas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let despesa of despesas">
+    <ion-grid>
+      <ion-row class="mover">
+        <ion-col>
+          <strong>{{ despesa.GRUPGAST_NOME }}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row class="tamanho">
+        <ion-col>
+          {{ despesa.DESP_OBS }}
+        </ion-col>
+      </ion-row>
+      <ion-row class="tamanho">
+        <ion-col>
+          {{ despesa.DESP_DATA }}
+        </ion-col>
+        <ion-col text-right>
+          R${{ despesa.DESP_VALOR }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <!--BOTÃO SUSPENSO -->
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="goDespesa()">
+      <ion-icon name="card"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

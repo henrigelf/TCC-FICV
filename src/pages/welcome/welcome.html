@@ -1,0 +1,16 @@
+<ion-content padding id="welcome" class="no-scroll">
+
+  <button ion-button clear full outline></button>
+  <div text-center>
+    <img src="../assets/imgs/logoficv.png" alt=""/>
+  </div>
+
+  <button ion-button clear class="marginTop">
+    <ion-item>
+      <ion-input type="email" placeholder="E-mail" [(ngModel)]="email"></ion-input>
+    </ion-item> 
+    <button ion-button (click)="signup()">cadastrar</button>
+  </button>
+  <button ion-button clear full class="marginBot" color="dagerButton" (click)="login()"> JÁ SOU CADASTRADO</button>
+
+</ion-content>
